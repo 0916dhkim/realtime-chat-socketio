@@ -8,66 +8,9 @@ import {
 import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
-import bannerImage from './assets/images/bg-img.png';
-import bubbleVector from './assets/images/bubble.svg';
+import AuthPageLayout from "./components/AuthPageLayout";
 import { connect } from "react-redux";
 import { register } from "./store/utils/thunkCreators";
-
-const Root = styled('div')(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-
-  [theme.breakpoints.up('lg')]: {
-    gridTemplateColumns: '4fr 6fr',
-  }
-}));
-
-const SideBanner = styled('div')(({ theme }) => ({
-  background: `top center / cover no-repeat url(${bannerImage})`,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  minHeight: '100vh',
-  position: 'relative',
-
-  '&::before': {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0.8532,
-    background: `linear-gradient(${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-  },
-
-  '& *': {
-    zIndex: 1,
-  },
-
-  [theme.breakpoints.down('md')]: {
-    display: 'none',
-  }
-}));
-
-const BannerText = styled('span')(({ theme }) => ({
-  fontSize: '26pt',
-  lineHeight: '40px',
-  textAlign: 'center',
-  marginTop: 39,
-  color: theme.palette.getContrastText(theme.palette.primary.main),
-}));
-
-const Container = styled('div')({
-  padding: '30px 42px',
-  display: 'flex',
-  gap: 86,
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  justifyContent: 'flex-start',
-});
 
 const Heading = styled('div')({
   display: 'flex',
@@ -161,76 +104,70 @@ const Signup = (props) => {
   }
 
   return (
-    <Root>
-      <SideBanner>
-        <img src={bubbleVector} alt="" />
-        <BannerText >Converse with anyone<br />with any language</BannerText>
-      </SideBanner>
-      <Container>
-        <Heading>
-          <HeadingText>Already have an account?</HeadingText>
-          <CreateAccountButton onClick={() => history.push("/login")} variant="contained">
-            Login
+    <AuthPageLayout>
+      <Heading>
+        <HeadingText>Already have an account?</HeadingText>
+        <CreateAccountButton onClick={() => history.push("/login")} variant="contained">
+          Login
           </CreateAccountButton>
-        </Heading>
-        <FormBase>
-          <FormContent onSubmit={handleRegister}>
-            <FormTitle>Create an account.</FormTitle>
-            <FormControl>
-              <SignupInput
-                aria-label="username"
-                label="Username"
-                name="username"
-                type="text"
-                required
-                style={{ marginTop: 12 }}
-              />
-            </FormControl>
-            <FormControl>
-              <SignupInput
-                label="E-mail address"
-                aria-label="e-mail address"
-                type="email"
-                name="email"
-                required
-                style={{ marginTop: 40 }}
-              />
-            </FormControl>
-            <FormControl error={!!formErrorMessage.confirmPassword}>
-              <SignupInput
-                aria-label="password"
-                label="Password"
-                type="password"
-                inputProps={{ minLength: 6 }}
-                name="password"
-                required
-                style={{ marginTop: 40 }}
-              />
-              <FormHelperText>
-                {formErrorMessage.confirmPassword}
-              </FormHelperText>
-            </FormControl>
-            <FormControl error={!!formErrorMessage.confirmPassword}>
-              <SignupInput
-                label="Confirm Password"
-                aria-label="confirm password"
-                type="password"
-                inputProps={{ minLength: 6 }}
-                name="confirmPassword"
-                required
-                style={{ marginTop: 40, marginBottom: 40 }}
-              />
-              <FormHelperText>
-                {formErrorMessage.confirmPassword}
-              </FormHelperText>
-            </FormControl>
-            <SignupButton type="submit" variant="contained" color="primary" disableElevation>
-              Create
+      </Heading>
+      <FormBase>
+        <FormContent onSubmit={handleRegister}>
+          <FormTitle>Create an account.</FormTitle>
+          <FormControl>
+            <SignupInput
+              aria-label="username"
+              label="Username"
+              name="username"
+              type="text"
+              required
+              style={{ marginTop: 12 }}
+            />
+          </FormControl>
+          <FormControl>
+            <SignupInput
+              label="E-mail address"
+              aria-label="e-mail address"
+              type="email"
+              name="email"
+              required
+              style={{ marginTop: 40 }}
+            />
+          </FormControl>
+          <FormControl error={!!formErrorMessage.confirmPassword}>
+            <SignupInput
+              aria-label="password"
+              label="Password"
+              type="password"
+              inputProps={{ minLength: 6 }}
+              name="password"
+              required
+              style={{ marginTop: 40 }}
+            />
+            <FormHelperText>
+              {formErrorMessage.confirmPassword}
+            </FormHelperText>
+          </FormControl>
+          <FormControl error={!!formErrorMessage.confirmPassword}>
+            <SignupInput
+              label="Confirm Password"
+              aria-label="confirm password"
+              type="password"
+              inputProps={{ minLength: 6 }}
+              name="confirmPassword"
+              required
+              style={{ marginTop: 40, marginBottom: 40 }}
+            />
+            <FormHelperText>
+              {formErrorMessage.confirmPassword}
+            </FormHelperText>
+          </FormControl>
+          <SignupButton type="submit" variant="contained" color="primary" disableElevation>
+            Create
             </SignupButton>
-          </FormContent>
-        </FormBase>
-      </Container>
-    </Root>
+        </FormContent>
+      </FormBase>
+    </AuthPageLayout>
   );
 };
 
