@@ -77,7 +77,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.delete("/logout", (req, res, next) => {
-  res.cookie('access_token', '').sendStatus(204);
+  res.clearCookie('access_token').sendStatus(204);
 });
 
 router.get("/user", (req, res, next) => {
