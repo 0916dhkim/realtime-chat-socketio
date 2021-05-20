@@ -1,12 +1,13 @@
+import { Button, CssBaseline, Grid } from "@material-ui/core";
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { Grid, CssBaseline, Button } from "@material-ui/core";
-import { SidebarContainer } from "./Sidebar";
+import { fetchConversations, logout } from "../store/utils/thunkCreators";
+
 import { ActiveChat } from "./ActiveChat";
-import { logout, fetchConversations } from "../store/utils/thunkCreators";
+import { Redirect } from "react-router-dom";
+import { SidebarContainer } from "./Sidebar";
 import { clearOnLogout } from "../store/index";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
