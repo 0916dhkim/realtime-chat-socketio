@@ -13,6 +13,11 @@ router.post("/", async (req, res, next) => {
 
     // if we already know conversation id, we can save time and just add it to message and return
     if (conversationId) {
+      if (!(await Conversation.hasUser(conversationId, senderId))) {
+        return res.status(401).json({
+          error: "Unauthorized. The sender is not a member of the conversation."
+        });
+      }
       const message = await Message.create({ senderId, text, conversationId });
       return res.json({ message, sender });
     }
