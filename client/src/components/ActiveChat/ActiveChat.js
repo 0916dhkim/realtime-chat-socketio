@@ -1,23 +1,27 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { Header, Input, Messages } from "./index";
+
 import { Box } from "@material-ui/core";
-import { Input, Header, Messages } from "./index";
+import React from "react";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexGrow: 8,
-    flexDirection: "column"
+    flexDirection: "column",
+    height: "100%",
   },
   chatContainer: {
-    marginLeft: 41,
-    marginRight: 41,
+    paddingTop: 34,
+    paddingLeft: 41,
+    paddingRight: 41,
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
-    justifyContent: "space-between"
-  }
+    justifyContent: "space-between",
+    overflow: "auto",
+  },
 }));
 
 const ActiveChat = (props) => {
@@ -39,12 +43,12 @@ const ActiveChat = (props) => {
               otherUser={conversation.otherUser}
               userId={user.id}
             />
-            <Input
-              otherUser={conversation.otherUser}
-              conversationId={conversation.id}
-              user={user}
-            />
           </Box>
+          <Input
+            otherUser={conversation.otherUser}
+            conversationId={conversation.id}
+            user={user}
+          />
         </>
       )}
     </Box>
