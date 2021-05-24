@@ -69,14 +69,19 @@ router.get("/", async (req, res, next) => {
       const convo = conversations[i];
       const convoJSON = convo.toJSON();
 
-      // set a property "otherUser" so that frontend will have easier access
+      // set a property "otherUser" and "lastReadMessageId"
+      // so that frontend will have easier access
       if (convoJSON.user1) {
         convoJSON.otherUser = convoJSON.user1;
+        convoJSON.lastReadMessageId = convoJSON.user2lastreadId;
         delete convoJSON.user1;
       } else if (convoJSON.user2) {
         convoJSON.otherUser = convoJSON.user2;
+        convoJSON.lastReadMessageId = convoJSON.user1lastreadId;
         delete convoJSON.user2;
       }
+      delete convoJSON.user1lastreadId;
+      delete convoJSON.user2lastreadId;
 
       // set property for online status of the other user
       if (onlineUsers.has(convoJSON.otherUser.id)) {

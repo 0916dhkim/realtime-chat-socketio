@@ -14,7 +14,7 @@ export const addMessageToStore = (state, payload) => {
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
       const convoCopy = { ...convo };
-      convoCopy.messages.push(message);
+      convoCopy.messages = [...convo.messages, message];
       convoCopy.latestMessageText = message.text;
 
       return convoCopy;
@@ -73,9 +73,21 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     if (convo.otherUser.id === recipientId) {
       const newConvo = { ...convo };
       newConvo.id = message.conversationId;
-      newConvo.messages.push(message);
+      newConvo.messages = [...convo.messages, message];
       newConvo.latestMessageText = message.text;
       return newConvo;
+    } else {
+      return convo;
+    }
+  });
+};
+
+export const addLastReadMessage = (state, message) => {
+  return state.map((convo) => {
+    if (convo.id === message.conversationId) {
+      const convoCopy = { ...convo };
+      convoCopy.lastReadMessageId = message.id;
+      return convoCopy;
     } else {
       return convo;
     }

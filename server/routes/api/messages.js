@@ -48,4 +48,32 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// expects { messageId } in body.
+router.post("/read", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+    const { messageId } = req.body;
+
+    const message = await Message.findByPk(messageId);
+    const conversation = await message.getConversation();
+
+    if (conversation.user1Id === req.user.id) {
+      conversation.setUser1lastread(message);
+      conversation.save();
+    } else if (conversation.user2Id === req.user.id) {
+      conversation.setUser2lastread(message);
+      conversation.save();
+    } else {
+      // Unauthorized.
+      return res.sendStatus(401);
+    }
+
+    res.json(true);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

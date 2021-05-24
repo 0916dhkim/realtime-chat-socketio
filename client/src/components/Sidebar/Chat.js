@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
-import { withStyles } from "@material-ui/core/styles";
-import { setActiveChat } from "../../store/activeConversation";
-import { connect } from "react-redux";
+import React, { Component } from "react";
 
-const styles = {
+import { Box } from "@material-ui/core";
+import { connect } from "react-redux";
+import { setActiveChat } from "../../store/activeConversation";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = (theme) => ({
   root: {
     borderRadius: 8,
     height: 80,
@@ -17,16 +18,35 @@ const styles = {
       cursor: "grab",
     },
   },
-};
+  unreadCounter: {
+    borderRadius: 10,
+    height: 20,
+    padding: "0 0.5em",
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    fontWeight: "bold",
+    textAlign: "center",
+  }
+});
 
 class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
   };
 
+  calculateUnreadCount() {
+    const { messages, lastReadMessageId } = this.props.conversation;
+    if (lastReadMessageId) {
+      return messages.length - messages.findIndex((message) => message.id === lastReadMessageId) - 1;
+    }
+    return messages.length;
+  }
+
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
+    const unreadCount = this.calculateUnreadCount();
+
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation)}
@@ -39,6 +59,12 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
+        {
+          unreadCount !== 0 &&
+          <Box className={classes.unreadCounter}>
+            {unreadCount}
+          </Box>
+        }
       </Box>
     );
   }

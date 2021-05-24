@@ -1,8 +1,9 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { Header, Input, Messages } from "./index";
+
 import { Box } from "@material-ui/core";
-import { Input, Header, Messages } from "./index";
+import React from "react";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   root: {
