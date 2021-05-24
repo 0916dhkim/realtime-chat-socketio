@@ -1,17 +1,16 @@
-import { Button, CssBaseline, Grid } from "@material-ui/core";
+import { CssBaseline, Grid } from "@material-ui/core";
 import React, { Component } from "react";
-import { fetchConversations, logout } from "../store/utils/thunkCreators";
 
 import { ActiveChat } from "./ActiveChat";
 import { Redirect } from "react-router-dom";
 import { SidebarContainer } from "./Sidebar";
-import { clearOnLogout } from "../store/index";
 import { connect } from "react-redux";
+import { fetchConversations, } from "../store/utils/thunkCreators";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    height: "97vh",
+    height: "100vh",
   },
 };
 
@@ -35,10 +34,6 @@ class Home extends Component {
     this.props.fetchConversations();
   }
 
-  handleLogout = async () => {
-    await this.props.logout(this.props.user.id);
-  };
-
   render() {
     const { classes } = this.props;
     if (!this.props.user.id) {
@@ -48,10 +43,6 @@ class Home extends Component {
     }
     return (
       <>
-        {/* logout button will eventually be in a dropdown next to username */}
-        <Button className={classes.logout} onClick={this.handleLogout}>
-          Logout
-        </Button>
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
           <SidebarContainer />
@@ -71,10 +62,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: (id) => {
-      dispatch(logout(id));
-      dispatch(clearOnLogout());
-    },
     fetchConversations: () => {
       dispatch(fetchConversations());
     },
