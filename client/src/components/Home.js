@@ -1,7 +1,7 @@
-import { CssBaseline, Grid } from "@material-ui/core";
 import React, { Component } from "react";
 
 import { ActiveChat } from "./ActiveChat";
+import { Grid } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import { SidebarContainer } from "./Sidebar";
 import { connect } from "react-redux";
@@ -44,7 +44,6 @@ class Home extends Component {
     return (
       <>
         <Grid container component="main" className={classes.root}>
-          <CssBaseline />
           <SidebarContainer />
           <ActiveChat />
         </Grid>
