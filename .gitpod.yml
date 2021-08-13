@@ -5,6 +5,7 @@ tasks:
     init: |
       cd server
       npm install
+      npm run seed
     command: npm run dev
     env:
       SESSION_SECRET: oiwnewerJlw70238974
@@ -21,3 +22,6 @@ ports:
   - port: 3001
     onOpen: notify
     visibility: public
+  - port: 5432
+    onOpen: ignore
+    visibility: private
