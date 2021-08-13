@@ -1,7 +1,4 @@
 tasks:
-  - name: Postgres
-    init: docker pull postgres
-    command: docker run -it --rm -p 5432:5432 -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=lk234hiovoin23 postgres -c log_statement=all
   - name: Backend
     init: |
       cd server
@@ -9,7 +6,7 @@ tasks:
     command: npm run dev
     env:
       SESSION_SECRET: oiwnewerJlw70238974
-      DATABASE_URL: postgres://postgres:lk234hiovoin23@localhost:5432/postgres
+      DATABASE_URL: postgres://localhost/postgres
   - name: Frontend
     init: |
       cd client
