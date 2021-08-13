@@ -11,12 +11,10 @@ tasks:
       npm run seed
     command: npm run dev
   - name: Frontend
-    env:
-      DANGEROUSLY_DISABLE_HOST_CHECK: true
     init: |
       cd client
       npm install
-    command: npm start
+    command: DANGEROUSLY_DISABLE_HOST_CHECK=true npm start
 ports:
   - port: 3000
     onOpen: open-browser
