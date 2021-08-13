@@ -1,5 +1,4 @@
-image:
-  file: .gitpod.dockerfile
+image: gitpod/workspace-postgres
 tasks:
   - name: Backend
     env:
