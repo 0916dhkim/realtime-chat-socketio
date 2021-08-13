@@ -1,13 +1,16 @@
+import { FilledInput, FormControl } from "@material-ui/core";
 import React, { Component } from "react";
-import { FormControl, FilledInput } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
     justifySelf: "flex-end",
     marginTop: 15,
+    marginLeft: 41,
+    marginRight: 41,
   },
   input: {
     height: 70,

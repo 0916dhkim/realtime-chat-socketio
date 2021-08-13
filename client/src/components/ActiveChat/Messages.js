@@ -1,10 +1,20 @@
-import React from "react";
-import { Box } from "@material-ui/core";
-import { SenderBubble, OtherUserBubble } from "../ActiveChat";
+import { Box, styled } from "@material-ui/core";
+import { OtherUserBubble, SenderBubble } from "../ActiveChat";
+import React, { useEffect, useRef } from "react";
+
 import moment from "moment";
+
+const InvisibleEndMarker = styled("div")({
+  height: 0,
+});
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
+
+  const messageEndRef = useRef();
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView();
+  }, [messages]);
 
   return (
     <Box>
@@ -17,6 +27,7 @@ const Messages = (props) => {
           <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
         );
       })}
+      <InvisibleEndMarker id="message-end-marker" ref={messageEndRef} />
     </Box>
   );
 };
