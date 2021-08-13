@@ -1,0 +1,24 @@
+tasks:
+  - name: Postgres
+    init: docker pull postgres
+    command: docker run -it --rm -p 5432:5432 -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=lk234hiovoin23!! postgres -c log_statement=all
+  - name: Backend
+    init: |
+      cd server
+      npm install
+    command: npm run dev
+    env:
+      SESSION_SECRET: oiwnewerJlw70238974
+      DATABASE_URL: postgres://postgres:lk234hiovoin23!!@localhost:5432/postgres
+  - name: Frontend
+    init: |
+      cd client
+      npm install
+    command: npm start
+ports:
+  - port: 3000
+    onOpen: open-browser
+    visibility: public
+  - port: 3001
+    onOpen: notify
+    visibility: public
