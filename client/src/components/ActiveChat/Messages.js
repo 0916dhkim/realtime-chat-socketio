@@ -1,10 +1,17 @@
-import React from "react";
+import { OtherUserBubble, SenderBubble } from "../ActiveChat";
+import React, { useEffect } from "react";
+
 import { Box } from "@material-ui/core";
-import { SenderBubble, OtherUserBubble } from "../ActiveChat";
+import { connect } from "react-redux";
 import moment from "moment";
+import { readMessage } from "../../store/utils/thunkCreators";
 
 const Messages = (props) => {
-  const { messages, otherUser, userId } = props;
+  const { messages, otherUser, userId, readMessage } = props;
+
+  useEffect(() => {
+    readMessage(messages[messages.length - 1]);
+  }, [messages, readMessage]);
 
   return (
     <Box>
@@ -21,4 +28,12 @@ const Messages = (props) => {
   );
 };
 
-export default Messages;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    readMessage: (message) => {
+      dispatch(readMessage(message));
+    },
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(Messages);
