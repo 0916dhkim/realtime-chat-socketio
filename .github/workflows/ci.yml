@@ -52,3 +52,15 @@ jobs:
       - name: Cypress
         working-directory: client
         run: yarn cypress run
+
+      - name: Save screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: client/cypress/screenshots
+
+      - name: Save videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: client/cypress/videos

@@ -29,6 +29,8 @@ describe("Auth Screens", () => {
 
     cy.contains("button", "Login").click();
 
+    cy.screenshot();
+
     // Check expected UI elements.
     cy.contains("Chats");
     cy.contains("thomas");
