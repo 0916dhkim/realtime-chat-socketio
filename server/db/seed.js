@@ -10,7 +10,7 @@ async function seed() {
   const thomas = await User.create({
     username: "thomas",
     email: "thomas@email.com",
-    password: "123457",
+    password: "123456",
     photoUrl:
       "https://res.cloudinary.com/dmlvthmqr/image/upload/v1607914467/messenger/thomas_kwzerk.png",
   });
