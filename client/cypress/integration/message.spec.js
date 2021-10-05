@@ -12,7 +12,7 @@ const bob = {
 };
 
 describe("Auth Screens", () => {
-  it("allows sign-in", () => {
+  it("setup", () => {
     cy.signup(alice.username, alice.email, alice.password);
     cy.logout();
     cy.signup(bob.username, bob.email, bob.password);
@@ -31,7 +31,15 @@ describe("Auth Screens", () => {
 
     cy.contains("First message");
     cy.contains("Second message");
-    cy.contains("Third message").then(() => {
+    cy.contains("Third message");
+  });
+
+  it("displays messages in correct order", () => {
+    cy.reload();
+    cy.login(alice.username, alice.password);
+    cy.contains("Bob").click();
+
+    cy.contains("First message").then(() => {
       // Select the message list DOM by finding the closest common ancestor
       // between two messages.
       const $firstMessage = Cypress.$(':contains("First message")');
