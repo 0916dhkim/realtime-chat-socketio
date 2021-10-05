@@ -38,4 +38,8 @@ describe("Auth Screens", () => {
     // Check URL.
     cy.url().should("include", "/home");
   });
+
+  it("can logout", () => {
+    cy.contains("button", "Logout").click();
+  });
 });
