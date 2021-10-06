@@ -38,6 +38,9 @@ SESSION_SECRET = "your session secret"
 
 - You need to seed the database before each run. Because E2E test cases writes data to
   the actual database, re-seeding is necessary to assure consistent test results.
+- The E2E tests are not comprehensive.
+  There is a test for the authentication pages that should pass with the starting code,
+  and some tests for some of the functionality for some of the tickets you will be assigned.
 - When you push your changes to GitHub, E2E tests are automatically executed on GitHub Actions.
   You can find test results under Pull request > Checks > test > Cypress (see screenshots below).
 
