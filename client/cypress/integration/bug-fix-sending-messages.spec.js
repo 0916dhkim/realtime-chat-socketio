@@ -19,7 +19,7 @@ describe("Bug Fix: Sending Messages", () => {
     cy.logout();
   });
 
-  it("sends message", () => {
+  it("sends message in a new conversation", () => {
     cy.login(alice.username, alice.password);
 
     cy.get("input[name=search]").type("Bob");
@@ -51,5 +51,20 @@ describe("Bug Fix: Sending Messages", () => {
       cy.wrap($list).children().eq(1).should("contain", "Second message");
       cy.wrap($list).children().eq(2).should("contain", "Third message");
     });
+  });
+
+  it("sends message in an existing conversation", () => {
+    cy.login(alice.username, alice.password);
+
+    cy.get("input[name=search]").type("Bob");
+    cy.contains("Bob").click();
+
+    cy.get("input[name=text]").type("Fourth message{enter}");
+    cy.get("input[name=text]").type("Fifth message{enter}");
+    cy.get("input[name=text]").type("Sixth message{enter}");
+
+    cy.contains("Fourth message");
+    cy.contains("Fifth message");
+    cy.contains("Sixth message");
   });
 });
