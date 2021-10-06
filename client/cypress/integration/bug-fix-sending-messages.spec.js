@@ -11,7 +11,7 @@ const bob = {
   password: "L%e$xZHC4QKP@F",
 };
 
-describe("Messenger Features", () => {
+describe("Bug Fix: Sending Messages", () => {
   it("setup", () => {
     cy.signup(alice.username, alice.email, alice.password);
     cy.logout();
