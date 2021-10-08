@@ -1,7 +1,32 @@
 const router = require("express").Router();
-const { User, Conversation, Message } = require("../../db/models");
+const {
+  User,
+  Conversation,
+  ConversationV2,
+  Membership,
+  Message,
+} = require("../../db/models");
 const { Op, literal } = require("sequelize");
 const onlineUsers = require("../../onlineUsers");
+
+async function getConversationV2ofUser(userId) {
+  const memberships = await Membership.findAll({
+    where: { userId },
+    include: [{ model: ConversationV2 }],
+  });
+
+  return memberships.map((membership) => {
+    const conversationV2 = membership.conversationV2;
+    conversationV2.user1 = await User.findByPk(membership.userId);
+    conversationV2.user2 = await Membership.findOne({
+      where: {
+        conversationId: membership.conversationId,
+        [Op.not]: [{ userId }],
+      },
+      include: [{ model: User }],
+    }).user;
+  });
+}
 
 // get all conversations for a user, include latest message text for preview, and all messages
 // include other user model so we have info on username/profile pic (don't include current user info)
@@ -12,7 +37,8 @@ router.get("/", async (req, res, next) => {
       return res.sendStatus(401);
     }
     const userId = req.user.id;
-    const conversations = await Conversation.findAll({
+    const conversationV2s = await getConversationV2ofUser(userId);
+    const legacyConversations = await Conversation.findAll({
       where: {
         [Op.or]: {
           user1Id: userId,
@@ -64,6 +90,7 @@ router.get("/", async (req, res, next) => {
         },
       ],
     });
+    const conversations = [...legacyConversations, ...conversationV2s];
 
     for (let i = 0; i < conversations.length; i++) {
       const convo = conversations[i];
@@ -91,7 +118,8 @@ router.get("/", async (req, res, next) => {
       }
 
       // set properties for notification count and latest message preview
-      convoJSON.latestMessageText = convoJSON.messages[convoJSON.messages.length - 1]?.text;
+      convoJSON.latestMessageText =
+        convoJSON.messages[convoJSON.messages.length - 1]?.text;
       conversations[i] = convoJSON;
     }
 
